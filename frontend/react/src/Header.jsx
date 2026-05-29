@@ -5,18 +5,26 @@ import AuthContext from './AuthContext'
 const Header = () => {
     let { user, logoutUser } = useContext(AuthContext)
 
+    let authlink;
+    if (user) {
+        authlink = <p onClick={logoutUser}>Logout</p>
+    } else {
+        authlink = <Link to="/login">Login</Link>
+    }
+
+    let greeting = null;
+    if (user) {
+        greeting = <p>Hello {user.username}!</p>
+    }
+
     return (
         <div>
             <Link to="/">Home</Link>
             <span> | </span>
-            {user ? (
-                <p onClick={logoutUser}>Logout</p>
-            ) : (
-                <Link to="/login" >Login</Link>
-            )}
-            {user && <p>Hello {user.username}!</p>}
+            {authlink}
+            {greeting}
         </div>
-    )
+    );
 }
 
 export default Header
